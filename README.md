@@ -2,6 +2,9 @@
 
 Very simple ML 101 to demo:
 
+![E2E ML 101]([https://example.com/diagram.png](https://github.com/drcaiomoreno/databricks-ml-101/blob/main/E2E_ML_101.png))
+
+
 [EN]
 1. Data Ingestion
 2. Table Creation
