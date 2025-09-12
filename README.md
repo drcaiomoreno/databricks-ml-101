@@ -2,8 +2,6 @@
 
 Very simple ML 101 to demo:
 
-Here is the English translation of your list:
-
 [EN]
 1. Data Ingestion
 2. Table Creation
