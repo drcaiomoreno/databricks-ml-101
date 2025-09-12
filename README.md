@@ -17,4 +17,10 @@ Here is the English translation of your list:
 3. Treinar um modelo de ML 
 4. Registrar o Modelo em UC
 5. Job para executar o ML Pipeline
- 
+
+[ES]
+1. Ingesta de datos
+2. Creación de la tabla
+3. Entrenar un modelo de ML
+4. Registrar el modelo en UC
+5. Trabajo para ejecutar el pipeline de ML
