@@ -1,0 +1,75 @@
+# Upgrade Databricks SDK to the latest version and restart Python to see updated packages
+%pip install --upgrade databricks-sdk==0.49.0
+%restart_python
+
+from databricks.sdk.service.jobs import JobSettings as Job
+
+
+E2E_ML_101 = Job.from_dict(
+    {
+        "name": "E2E_ML_101",
+        "tasks": [
+            {
+                "task_key": "Init_Project",
+                "notebook_task": {
+                    "notebook_path": "/Repos/caio.moreno@databricks.com/databricks-ml-101/code/1-basic-ml-demo/0_Init",
+                    "source": "WORKSPACE",
+                },
+                "existing_cluster_id": "0904-111436-kact9l5w",
+            },
+            {
+                "task_key": "Ingest_Data",
+                "depends_on": [
+                    {
+                        "task_key": "Init_Project",
+                    },
+                ],
+                "notebook_task": {
+                    "notebook_path": "/Repos/caio.moreno@databricks.com/databricks-ml-101/code/1-basic-ml-demo/1-Ingest_Data",
+                    "source": "WORKSPACE",
+                },
+                "existing_cluster_id": "0904-111436-kact9l5w",
+            },
+            {
+                "task_key": "Train_Register_ML_Model_LR",
+                "depends_on": [
+                    {
+                        "task_key": "Ingest_Data",
+                    },
+                ],
+                "notebook_task": {
+                    "notebook_path": "/Repos/caio.moreno@databricks.com/databricks-ml-101/code/1-basic-ml-demo/2-Train_and_Register_ML_Model_LR",
+                    "source": "WORKSPACE",
+                },
+                "existing_cluster_id": "0904-111436-kact9l5w",
+            },
+            {
+                "task_key": "Train_Register_ML_Model_RF",
+                "depends_on": [
+                    {
+                        "task_key": "Ingest_Data",
+                    },
+                ],
+                "notebook_task": {
+                    "notebook_path": "/Repos/caio.moreno@databricks.com/databricks-ml-101/code/1-basic-ml-demo/2.1-Train_and_Register_ML_Model_RF",
+                    "source": "WORKSPACE",
+                },
+                "existing_cluster_id": "0904-111436-kact9l5w",
+            },
+        ],
+        "git_source": {
+            "git_url": "https://github.com/drcaiomoreno/databricks-ml-101.git",
+            "git_provider": "gitHub",
+            "git_branch": "main",
+        },
+        "queue": {
+            "enabled": True,
+        },
+    }
+)
+
+from databricks.sdk import WorkspaceClient
+
+w = WorkspaceClient()
+w.jobs.reset(new_settings=E2E_ML_101, job_id=374405248742032)
+# or create a new job using: w.jobs.create(**E2E_ML_101.as_shallow_dict())
